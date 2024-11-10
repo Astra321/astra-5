@@ -1,77 +1,43 @@
-"use client";
 
-import { cn } from "@/lib/utils";
-import Image from "next/image";
-import { Button } from "./ui/button";
-import { ImageIcon, X } from "lucide-react";
-import { useCoverImage } from "@/hooks/useCoverImage";
-import { useMutation } from "convex/react";
-import { api } from "@/convex/_generated/api";
-import { useParams } from "next/navigation";
-import { Id } from "@/convex/_generated/dataModel";
-import { useEdgeStore } from "@/lib/edgestore";
-import { Skeleton } from "./ui/skeleton";
+'use client';
 
-interface CoverImageProps {
-  url?: string;
-  preview?: boolean;
-}
+import { useEffect, useState } from 'react';
+import { getStorage, ref, getDownloadURL } from 'firebase/storage';
+import { initializeApp } from 'firebase/app';
 
-export const Cover = ({ url, preview }: CoverImageProps) => {
-  const { edgestore } = useEdgeStore();
+const firebaseConfig = {
+  apiKey: process.env.FIREBASE_API_KEY,
+  authDomain: process.env.FIREBASE_AUTH_DOMAIN,
+  projectId: process.env.FIREBASE_PROJECT_ID,
+  storageBucket: process.env.FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: process.env.FIREBASE_MESSAGING_SENDER_ID,
+  appId: process.env.FIREBASE_APP_ID
+};
 
-  const params = useParams();
-  const coverImage = useCoverImage();
-  const removeCoverImage = useMutation(api.documents.removeCoverImage);
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+const storage = getStorage(app);
 
-  const onRemove = async () => {
-    if (url) {
-      await edgestore.publicFiles.delete({
-        url: url,
-      });
-    }
-    removeCoverImage({
-      id: params.documentId as Id<"documents">,
-    });
-  };
+export default function Cover() {
+  const [coverUrl, setCoverUrl] = useState('');
+
+  useEffect(() => {
+    const fetchCoverUrl = async () => {
+      try {
+        const coverRef = ref(storage, 'covers/coverImage.jpg');
+        const url = await getDownloadURL(coverRef);
+        setCoverUrl(url);
+      } catch (error) {
+        console.error('Error fetching cover image URL:', error);
+      }
+    };
+
+    fetchCoverUrl();
+  }, []);
 
   return (
-    <div
-      className={cn(
-        "group relative h-[35vh] w-full",
-        !url && "h-[12vh]",
-        url && "bg-muted",
-      )}
-    >
-      {!!url && (
-        <Image src={url} fill alt="cover" className="object-cover" priority />
-      )}
-      {url && !preview && (
-        <div className="absolute bottom-5 right-5 flex items-center gap-x-2 opacity-0 group-hover:opacity-100">
-          <Button
-            onClick={() => coverImage.onReplace(url)}
-            className="text-xs text-muted-foreground"
-            variant="outline"
-            size="sm"
-          >
-            <ImageIcon className="mr-2 h-4 w-4" />
-            Change cover
-          </Button>
-          <Button
-            onClick={onRemove}
-            className="text-xs text-muted-foreground"
-            variant="outline"
-            size="sm"
-          >
-            <X className="mr-2 h-4 w-4" />
-            Remove
-          </Button>
-        </div>
-      )}
+    <div>
+      {coverUrl && <img src={coverUrl} alt="Cover Image" />}
     </div>
   );
-};
-
-Cover.Skeleton = function CoverSkeleton() {
-  return <Skeleton className="h-[12vh] w-full" />;
-};
+}

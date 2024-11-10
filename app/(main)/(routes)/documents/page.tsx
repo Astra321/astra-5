@@ -2,7 +2,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { getFirestore, collection, addDoc } from 'firebase/firestore';
+import { getFirestore, collection, addDoc, getDocs } from 'firebase/firestore';
 import { initializeApp } from 'firebase/app';
 
 const firebaseConfig = {
@@ -18,15 +18,33 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
+interface Document {
+  id: string;
+  name: string;
+}
+
 export default function DocumentsPage() {
-  const [documents, setDocuments] = useState([]);
+  const [documents, setDocuments] = useState<Document[]>([]);
+
+  useEffect(() => {
+    const fetchDocuments = async () => {
+      const querySnapshot = await getDocs(collection(db, 'documents'));
+      const docsList = querySnapshot.docs.map((doc) => ({
+        id: doc.id,
+        ...doc.data(),
+      })) as Document[];
+      setDocuments(docsList);
+    };
+
+    fetchDocuments();
+  }, []);
 
   const createDocument = async () => {
     try {
       const docRef = await addDoc(collection(db, 'documents'), {
-        // Document fields here
+        name: 'New Document',
       });
-      console.log('Document written with ID: ', docRef.id);
+      setDocuments((prevDocs) => [...prevDocs, { id: docRef.id, name: 'New Document' }]);
     } catch (e) {
       console.error('Error adding document: ', e);
     }
