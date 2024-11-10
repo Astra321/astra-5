@@ -1,1 +1,0 @@
-export const Heading = () => <h1>Heading Component</h1>;
