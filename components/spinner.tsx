@@ -1,1 +1,2 @@
-export default function Spinner() { return <div>Loading...</div>; }
+const Spinner = () => <div>Loading...</div>;
+export default Spinner;
