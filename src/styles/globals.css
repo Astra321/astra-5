@@ -1,0 +1,45 @@
+
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
+
+/* Apply space-themed global background and typography */
+body {
+  @apply bg-background text-starGlow;
+  background-image: url('/public/star-background.jpg');
+  background-size: cover;
+  font-family: 'Roboto', sans-serif;
+  font-weight: 300;
+}
+
+/* Custom button styles for glowing effect */
+button {
+  @apply bg-primary text-white font-bold py-2 px-4 rounded transition-all duration-300 ease-in-out;
+}
+button:hover {
+  @apply bg-secondary transform scale-105 shadow-lg;
+  box-shadow: 0px 0px 10px #FFBC42;  /* Accent color glow */
+}
+
+/* Custom styles for headings */
+h1, h2, h3, h4, h5, h6 {
+  @apply text-primary font-semibold;
+  font-family: 'Orbitron', sans-serif;
+}
+
+/* Navbar and footer customization */
+.navbar {
+  @apply bg-background text-starGlow shadow-lg;
+}
+.footer {
+  @apply bg-background text-starGlow mt-4 p-4 text-center;
+}
+
+/* Card styles */
+.card {
+  @apply bg-secondary text-white p-6 rounded-lg shadow-md transition-transform duration-300;
+}
+.card:hover {
+  @apply transform scale-105;
+  box-shadow: 0px 0px 15px #FFBC42;  /* Accent color glow */
+}
