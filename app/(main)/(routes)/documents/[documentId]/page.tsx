@@ -6,4 +6,12 @@ import Cover from '@/components/cover';
 import { Toolbar } from '@/components/toolbar';
 import { Skeleton } from '@/components/ui/skeleton';
 
-// The rest of the file content remains the same
+export default function DocumentPage() {
+  // Component logic here
+
+  return (
+    <div>
+      {/* Page content */}
+    </div>
+  );
+}

@@ -1,6 +1,10 @@
 
 'use client';
 
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
-// Hook content remains the same
+export default function useOrigin() {
+  useEffect(() => {
+    // Example logic for origin tracking
+  }, []);
+}
