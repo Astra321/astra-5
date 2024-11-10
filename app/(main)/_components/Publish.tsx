@@ -1,0 +1,1 @@
+export const Publish = () => <div>Publish Component</div>;
