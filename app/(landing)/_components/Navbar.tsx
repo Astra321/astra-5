@@ -1,7 +1,6 @@
-
 'use client';
 
-import React, { useEffect } from 'react';
+import React from 'react';
 import Spinner from '@/components/spinner';
 import useScrollTop from '@/hooks/useScrollTop';
 
