@@ -3,8 +3,10 @@
 
 import { useEffect } from 'react';
 
-export default function useScrollTop() {
+const useScrollTop = () => {
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
-}
+};
+
+export default useScrollTop;

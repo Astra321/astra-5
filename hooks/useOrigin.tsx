@@ -3,8 +3,10 @@
 
 import { useEffect } from 'react';
 
-export default function useOrigin() {
+const useOrigin = () => {
   useEffect(() => {
     // Example logic for tracking origin
   }, []);
-}
+};
+
+export default useOrigin;

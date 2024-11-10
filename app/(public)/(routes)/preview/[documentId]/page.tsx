@@ -1,12 +1,12 @@
 
 'use client';
 
-import { useMemo } from 'react';
+import React from 'react';
 import Cover from '@/components/cover';
 import { Toolbar } from '@/components/toolbar';
 import { Skeleton } from '@/components/ui/skeleton';
 
-export default function PreviewPage() {
+const PreviewPage = () => {
   // Component logic here
 
   return (
@@ -14,4 +14,6 @@ export default function PreviewPage() {
       {/* Page content */}
     </div>
   );
-}
+};
+
+export default PreviewPage;
