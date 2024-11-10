@@ -5,7 +5,7 @@ import { Doc, Id } from "./_generated/dataModel";
 export const archive = mutation({
   args: { id: v.id("documents") },
   handler: async (ctx, args) => {
-    const identity = await ctx.auth.getUserIdentity();
+    const identity = await auth.getUserIdentity();
 
     if (!identity) {
       throw new Error("Not authenticated");
@@ -55,7 +55,7 @@ export const getSidebar = query({
     parentDocument: v.optional(v.id("documents")),
   },
   handler: async (ctx, args) => {
-    const identity = await ctx.auth.getUserIdentity();
+    const identity = await auth.getUserIdentity();
 
     if (!identity) {
       throw new Error("Not authenticated");
@@ -82,7 +82,7 @@ export const create = mutation({
     parentDocument: v.optional(v.id("documents")),
   },
   handler: async (ctx, args) => {
-    const identity = await ctx.auth.getUserIdentity();
+    const identity = await auth.getUserIdentity();
 
     if (!identity) {
       throw new Error("Not authenticated");
@@ -104,7 +104,7 @@ export const create = mutation({
 
 export const getTrash = query({
   handler: async (ctx) => {
-    const identity = await ctx.auth.getUserIdentity();
+    const identity = await auth.getUserIdentity();
 
     if (!identity) {
       throw new Error("Not authenticated");
@@ -126,7 +126,7 @@ export const getTrash = query({
 export const restore = mutation({
   args: { id: v.id("documents") },
   handler: async (ctx, args) => {
-    const identity = await ctx.auth.getUserIdentity();
+    const identity = await auth.getUserIdentity();
 
     if (!identity) {
       throw new Error("Not authenticated");
@@ -184,7 +184,7 @@ export const restore = mutation({
 export const remove = mutation({
   args: { id: v.id("documents") },
   handler: async (ctx, args) => {
-    const identity = await ctx.auth.getUserIdentity();
+    const identity = await auth.getUserIdentity();
 
     if (!identity) {
       throw new Error("Not authenticated");
@@ -210,7 +210,7 @@ export const remove = mutation({
 
 export const getSearch = query({
   handler: async (ctx) => {
-    const identity = await ctx.auth.getUserIdentity();
+    const identity = await auth.getUserIdentity();
 
     if (!identity) {
       throw new Error("Not authenticated");
@@ -232,7 +232,7 @@ export const getSearch = query({
 export const getById = query({
   args: { documentId: v.id("documents") },
   handler: async (ctx, args) => {
-    const identity = await ctx.auth.getUserIdentity();
+    const identity = await auth.getUserIdentity();
 
     const document = await ctx.db.get(args.documentId);
 
@@ -268,7 +268,7 @@ export const update = mutation({
     isPublished: v.optional(v.boolean()),
   },
   handler: async (ctx, args) => {
-    const identity = await ctx.auth.getUserIdentity();
+    const identity = await auth.getUserIdentity();
 
     if (!identity) {
       throw new Error("Not authenticated");
@@ -299,7 +299,7 @@ export const update = mutation({
 export const removeIcon = mutation({
   args: { id: v.id("documents") },
   handler: async (ctx, args) => {
-    const identity = await ctx.auth.getUserIdentity();
+    const identity = await auth.getUserIdentity();
 
     if (!identity) {
       throw new Error("Not authenticated");
@@ -328,7 +328,7 @@ export const removeIcon = mutation({
 export const removeCoverImage = mutation({
   args: { id: v.id("documents") },
   handler: async (ctx, args) => {
-    const identity = await ctx.auth.getUserIdentity();
+    const identity = await auth.getUserIdentity();
 
     if (!identity) {
       throw new Error("Not authenticated");
